@@ -1,0 +1,34 @@
+---
+# Esta é minha primeira playbook
+- name: Primeiros passos com o Ansible
+  hosts: all
+  tasks:
+  - name: Adicionando devops ao hosts
+    become: true
+    lineinfile:
+      line: '{{item}}'
+      path: /etc/hosts
+    with_items:
+    - '192.168.10.10 devops.dexter.com.br'
+    - '192.168.10.20 docker-dexter.com.br'
+    - '192.168.10.30 automation.dexter.com.br'
+  - name: Adicionando colunas vim
+    become: true
+    lineinfile:
+      line: '{{item}}'
+      path: /etc/vimrc
+    with_items:
+    - 'set cursorcolumn'
+    - 'set cursorline'
+    - 'set nowrap'
+    when: ansible_distribution != 'Debian'
+  - name: Adicionando colunas vim
+    become: true
+    lineinfile:
+      line: '{{item}}'
+      path: /etc/vim/vimrc
+    with_items:
+    - 'set cursorcolumn'
+    - 'set cursorline'
+    - 'set nowrap'
+    when: ansible_distribution == 'Debian'
